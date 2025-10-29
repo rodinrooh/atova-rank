@@ -106,9 +106,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Create SF and Final matchups
-    const sfLeftId = createdMatchups.find(m => m.match_number === 1)?.id
-    const sfRightId = createdMatchups.find(m => m.match_number === 3)?.id
-    const finalId = createdMatchups.find(m => m.match_number === 1)?.id // Will be updated
+    const _sfLeftId = createdMatchups.find(m => m.match_number === 1)?.id
+    const _sfRightId = createdMatchups.find(m => m.match_number === 3)?.id
+    const _finalId = createdMatchups.find(m => m.match_number === 1)?.id // Will be updated
 
     const { data: sfMatchups, error: sfError } = await supabaseAdmin
       .from('matchups')

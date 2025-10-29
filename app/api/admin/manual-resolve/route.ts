@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { checkAdminAccess } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   try {
     // Check admin access
     const adminCheck = await checkAdminAccess()

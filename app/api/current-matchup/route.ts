@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 type VCJson = {
@@ -53,7 +53,7 @@ interface CurrentMatchupResponse {
   } | null
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     console.log('📊 [API] GET /api/current-matchup - Fetching active matchup...')
     

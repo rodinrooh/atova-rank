@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { checkAdminAccess } from '@/lib/auth'
-import { CP_START, MATCH_DURATION_HOURS, TIE_BREAK_METHOD } from '@/lib/constants'
+import { CP_START, MATCH_DURATION_HOURS } from '@/lib/constants'
 
 export async function POST(request: NextRequest) {
   try {

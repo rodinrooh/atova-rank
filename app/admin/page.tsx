@@ -3,11 +3,32 @@
 import { useUser } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 
+type Matchup = {
+  id: string;
+  matchNumber: number;
+  round: string;
+  seasonId: string;
+  startedAt: string;
+  endsAt: string;
+  vcA: {
+    id: string;
+    name: string;
+    conference: string;
+    currentCp: number;
+  };
+  vcB: {
+    id: string;
+    name: string;
+    conference: string;
+    currentCp: number;
+  };
+};
+
 export default function AdminPage() {
   const { user, isLoaded } = useUser()
   const [status, setStatus] = useState('Loading...')
   const [seasonId, setSeasonId] = useState<string | null>(null)
-  const [currentMatchup, setCurrentMatchup] = useState<any>(null)
+  const [currentMatchup, setCurrentMatchup] = useState<Matchup | null>(null)
   const [eventDelta, setEventDelta] = useState<number>(0)
   const [eventReason, setEventReason] = useState('')
   const [eventVcId, setEventVcId] = useState('')

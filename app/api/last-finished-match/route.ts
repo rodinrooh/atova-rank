@@ -1,46 +1,49 @@
-// app/api/last-finished-match/route.ts
-import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { NextResponse } from 'next/server';
+// NOTE: Adjust this import to your actual admin client export/path:
+import { supabaseAdmin } from '@/lib/supabase-admin';
+
+// Minimal shape we return — adjust fields if your UI expects more.
+type LastFinishedMatch = {
+  id: string;
+  vcAId: string | null;
+  vcBId: string | null;
+  winnerId: string | null;
+  finishedAt: string | null; // ISO string
+};
 
 export async function GET() {
-  const { data, error } = await supabaseAdmin
-    .from("matchups")
-    .select(`
-      id,
-      match_number,
-      round,
-      winner_id,
-      final_cp_a,
-      final_cp_b,
-      updated_at,
-      vc_a:vcs!matchups_vc_a_id_fkey ( id, name ),
-      vc_b:vcs!matchups_vc_b_id_fkey ( id, name )
-    `)
-    .eq("finished", true)
-    .order("updated_at", { ascending: false })
-    .limit(1);
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('matches')
+      .select('id, vc_a_id, vc_b_id, winner_id, finished_at')
+      .eq('status', 'finished')
+      .order('finished_at', { ascending: false })
+      .limit(1);
 
-  if (error || !data || data.length === 0) {
-    return NextResponse.json({ ok: false });
-  }
-
-  const m = data[0];
-
-  const winner =
-    m.winner_id === (m.vc_a as any)?.id ? m.vc_a :
-    m.winner_id === (m.vc_b as any)?.id ? m.vc_b : null;
-
-  return NextResponse.json({
-    ok: true,
-    match: {
-      id: m.id,
-      matchNumber: m.match_number,
-      round: m.round,
-      winner,
-      finalScores: {
-        vcA: { id: (m.vc_a as any)?.id, name: (m.vc_a as any)?.name, cp: m.final_cp_a },
-        vcB: { id: (m.vc_b as any)?.id, name: (m.vc_b as any)?.name, cp: m.final_cp_b }
-      }
+    if (error) {
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 500 }
+      );
     }
-  });
+
+    const row = data && data[0];
+    if (!row) {
+      return NextResponse.json({ ok: true, match: null }, { status: 200 });
+    }
+
+    const result: LastFinishedMatch = {
+      id: String(row.id),
+      vcAId: row.vc_a_id ?? null,
+      vcBId: row.vc_b_id ?? null,
+      winnerId: row.winner_id ?? null,
+      finishedAt: row.finished_at ?? null,
+    };
+
+    return NextResponse.json({ ok: true, match: result }, { status: 200 });
+  } catch (err) {
+    const message =
+      err instanceof Error ? err.message : 'Unknown server error';
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+  }
 }
