@@ -1,6 +1,6 @@
 // app/api/admin/test-end-in-1m/route.ts
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/src/lib/supabase-admin";
+import { supabaseAdmin } from "../../../../src/lib/supabase-admin";
 
 export async function POST() {
   // Find active match
