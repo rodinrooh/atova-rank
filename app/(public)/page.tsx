@@ -46,6 +46,7 @@ const lightenHex = (hex: string, fraction = 0.25) => {
 
 export default function TestPage() {
   const [timeRemaining, setTimeRemaining] = useState("00:00:00");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [matchup, setMatchup] = useState<any>(null);
   const [hoveredBox, setHoveredBox] = useState<string | null>(null);
   const [pressedBox, setPressedBox] = useState<string | null>(null);
@@ -149,6 +150,7 @@ export default function TestPage() {
       if (result.ok) {
         setHasVoted(true);
         // Update the matchup with new CP values
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setMatchup((prev: any) => ({
           ...prev,
           vcA: {

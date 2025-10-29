@@ -1,6 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Match = any;
 type Bracket = { quarterfinals: Match[]; semifinals: Match[]; finals: Match[] };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function side(match: any, s: "A" | "B") {
   const cands = [
     match?.[`vc${s}`],
