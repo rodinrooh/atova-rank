@@ -11,6 +11,7 @@ interface AdminEventRequest {
   reason: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function validateAdminEventRequest(body: any): body is AdminEventRequest {
   return body && 
     typeof body === 'object' &&

@@ -14,11 +14,13 @@ interface SeedRequest {
   vcs: VC[]
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function validateSeedRequest(body: any): body is SeedRequest {
   if (!body || typeof body !== 'object') return false
   if (!body.seasonId || typeof body.seasonId !== 'string') return false
   if (!Array.isArray(body.vcs) || body.vcs.length !== 8) return false
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return body.vcs.every((vc: any) => 
     vc && 
     typeof vc === 'object' &&

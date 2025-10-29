@@ -7,6 +7,7 @@ interface StartSeasonRequest {
   seasonId: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function validateStartSeasonRequest(body: any): body is StartSeasonRequest {
   return body && typeof body === 'object' && typeof body.seasonId === 'string'
 }

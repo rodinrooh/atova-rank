@@ -14,6 +14,7 @@ interface VoteResponse {
   code?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function validateVoteRequest(body: any): body is VoteRequest {
   return (
     body &&

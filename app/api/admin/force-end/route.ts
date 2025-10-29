@@ -106,6 +106,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Determine which slot to fill
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let updateData: any
       if (nextMatch.vc_a_id === null) {
         updateData = { vc_a_id: winnerId }

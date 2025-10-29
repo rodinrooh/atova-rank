@@ -106,6 +106,7 @@ export default function BracketPage() {
     return 'upcoming'
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'bg-green-100 border-green-500 text-green-800'
