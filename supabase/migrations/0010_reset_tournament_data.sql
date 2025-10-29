@@ -1,0 +1,7 @@
+-- Reset tournament data for clean slate
+TRUNCATE TABLE matchups CASCADE;
+TRUNCATE TABLE vcs CASCADE;
+TRUNCATE TABLE seasons CASCADE;
+TRUNCATE TABLE votes CASCADE;
+TRUNCATE TABLE events CASCADE;
+TRUNCATE TABLE hall_of_fame CASCADE;

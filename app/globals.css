@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { background: #ffffff; }
+
+@layer components {
+  /* Big, portrait boxes; height = 2x width */
+  .hero-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    flex-shrink: 0;
+    user-select: none;
+    
+    /* SIZE: make them WAY bigger; width drives height via aspect */
+    width: 14rem;
+    aspect-ratio: 1 / 1.5;
+    
+    /* Typography */
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  @media (min-width: 640px) {
+    .hero-box {
+      width: 16rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .hero-box {
+      width: 18rem;
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-box {
+      width: 20rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .hero-box {
+      width: 22rem;
+    }
+  }
+
+  /* Hardened vote button: exact radius, predictable box model, focus states */
+  .btn-vote {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    border: 0;
+    outline: none;
+    user-select: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .btn-vote:focus-visible {
+    ring: 2px solid rgba(255, 255, 255, 0.6);
+  }
+  
+  .btn-vote:active {
+    opacity: 0.9;
+  }
+  
+  .btn-vote:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* NEW: width clamp for the entire vote module */
+  .vote-clamp {
+    /* 45% of viewport, but never narrower than 420px or wider than 900px */
+    width: clamp(420px, 45vw, 900px);
+    margin-inline: auto; /* center it */
+    margin-top: 2rem;
+  }
+
+  /* Make sure the grid fills the clamp */
+  .vote-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;            /* same visual gap as before */
+    align-items: start;
+    width: 100%;
+  }
+
+  /* Each column stacks its red + black button */
+  .vote-col {
+    display: grid;
+    grid-auto-rows: min-content;
+    row-gap: 0.25rem;       /* tight, consistent vertical spacing */
+  }
+
+  /* Vote counts below the buttons */
+  .vote-counts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;            /* same gap as the vote grid */
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  .vote-count {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000000;
+  }
+
+/* --- Top-edge hard reset (prevents any phantom gap) --- */
+html, body, #__next {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Ensure headings don't reintroduce margins if Preflight is altered */
+h1, h2, h3, h4, h5, h6 {
+  margin-block: 0 !important;
+}
+
+/* Tournament Bracket Styles */
+.bracket-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+  justify-content: center;
+}
+
+.bracket-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.final-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px;
+  align-items: center;
+}
+
+.matches {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.match {
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  background: #eeeeee;
+}
+
+.match.active {
+  border-color: #10b981;
+  background: #eeeeee;
+}
+
+.match.finished {
+  border-color: #6b7280;
+  background: #eeeeee;
+}
+
+.match.upcoming {
+  border-color: #3b82f6;
+  background: #eeeeee;
+}
+
+.match.final {
+  border-width: 2px;
+  background: #eeeeee;
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.match-num {
+  font-weight: bold;
+  color: #6b7280;
+}
+
+.live {
+  background: #10b981;
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.winner {
+  background: #059669;
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.champion {
+  background: #f59e0b;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem;
+  background: #f5f5f5;
+  border-radius: 0.25rem;
+}
+
+.team-color {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.team-name {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.team-score {
+  font-size: 0.7rem;
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.vs {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+.waiting {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.8rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 0.25rem;
+  border: 1px dashed #d1d5db;
+}
+
+@media (max-width: 768px) {
+  .bracket-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+  /* Optional: mobile fallback to single column if space gets tight */
+  @media (max-width: 520px) {
+    .vote-clamp { width: 92vw; }          /* take most of the screen on tiny devices */
+    .vote-grid { grid-template-columns: 1fr; } /* stack A over B if needed */
+  }
+
+  /* Utility for our test rectangles */
+  .test-rect {
+    width: 10rem;
+    height: 5rem;
+    border-radius: 10px;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    display: grid;
+    place-items: center;
+    user-select: none;
+    box-sizing: border-box;
+  }
+
+  /* VC color decorative buttons - same width as vote buttons but MUCH taller */
+  .btn-vc-color {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11rem 1.5rem; /* Massive height - 11rem vertical padding */
+    border-radius: 10px;
+    border: 0;
+    outline: none;
+    user-select: none;
+    box-sizing: border-box;
+    width: 100%;
+    color: #ffffff; /* White text for VC names */
+    font-weight: bold; /* Make text bold and prominent */
+    font-size: 2rem; /* Large text to match the massive height */
+    /* background-color will be set via inline style from matchup.vcA.colorHex / matchup.vcB.colorHex */
+  }
+}
+
+/* 🔒 Guard against global resets that destroy buttons */
+button.btn-vote {
+  display: inline-flex;         /* in case a reset removed display */
+  background-clip: padding-box; /* avoid odd border bleed with overlays */
+}
+
+/* Line separator between clock and lower content */
+.clock-separator {
+  width: 100%;
+  height: 2px;
+  background-color: #e5e5e5; /* slightly darker than #f6f6f6 */
+  border: none;
+  margin: 1.5rem 0;
+}
+
